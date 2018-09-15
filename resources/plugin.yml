@@ -1,0 +1,12 @@
+name: Rayken
+main: com.kylenanakdewa.rayken.MagicPlugin
+version: 1.0
+
+depend: [CoRE]
+
+commands:
+  magic:
+    description: Magic commands
+  spell:
+    description: Change your active spell
+    aliases: [spells, changespell, equipspell, cast]
