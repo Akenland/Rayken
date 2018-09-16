@@ -36,10 +36,12 @@ public class MagicUser extends PlayerSaveDataSection {
 	public MagicUser(PlayerCharacter player){
 		super(player, MagicPlugin.plugin);
 		loadData();
+		saveExp();
 	}
 	public MagicUser(OfflinePlayer player){
 		super(player, MagicPlugin.plugin);
 		loadData();
+		saveExp();
 	}
 	/*public MagicUser(OfflinePlayer player){
 		super(player);
@@ -69,14 +71,14 @@ public class MagicUser extends PlayerSaveDataSection {
 		if(levelWarg+levelEborite+levelSholk+levelRhun==0) return;
 
 		// Save the levels and exp
-		data.set("magicuser.exp.warg.level", levelWarg);
-		data.set("magicuser.exp.warg.exp", expWarg);
-		data.set("magicuser.exp.eborite.level", levelEborite);
-		data.set("magicuser.exp.eborite.exp", expEborite);
-		data.set("magicuser.exp.sholk.level", levelSholk);
-		data.set("magicuser.exp.sholk.exp", expSholk);
-		data.set("magicuser.exp.rhun.level", levelRhun);
-		data.set("magicuser.exp.rhun.exp", expRhun);
+		data.set("exp.warg.level", levelWarg);
+		data.set("exp.warg.exp", expWarg);
+		data.set("exp.eborite.level", levelEborite);
+		data.set("exp.eborite.exp", expEborite);
+		data.set("exp.sholk.level", levelSholk);
+		data.set("exp.sholk.exp", expSholk);
+		data.set("exp.rhun.level", levelRhun);
+		data.set("exp.rhun.exp", expRhun);
 		save();
 	}
 
