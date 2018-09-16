@@ -54,15 +54,17 @@ public class MagicUser extends PlayerSaveDataSection {
 	void loadData(){
 		//if(data.contains("magicuser.spells")) unlockedSpells = data.getConfigurationSection("magicuser.spells").getValues(false);
 		//if(data.contains("magicuser.skills")) unlockedSkills = data.getConfigurationSection("magicuser.skills").getValues(false);
-			
-		levelWarg = data.getInt("exp.warg.level");
-		expWarg = data.getDouble("exp.warg.exp");
-		levelEborite = data.getInt("exp.eborite.level");
-		expEborite = data.getDouble("exp.eborite.exp");
-		levelSholk = data.getInt("exp.sholk.level");
-		expSholk = data.getDouble("exp.sholk.exp");
-		levelRhun = data.getInt("exp.rhun.level");
-		expRhun = data.getDouble("exp.rhun.exp");
+
+		if(data.contains("exp")){
+			levelWarg = data.getInt("exp.warg.level");
+			expWarg = data.getDouble("exp.warg.exp");
+			levelEborite = data.getInt("exp.eborite.level");
+			expEborite = data.getDouble("exp.eborite.exp");
+			levelSholk = data.getInt("exp.sholk.level");
+			expSholk = data.getDouble("exp.sholk.exp");
+			levelRhun = data.getInt("exp.rhun.level");
+			expRhun = data.getDouble("exp.rhun.exp");
+		}
 	}
 
 	// Save magic user stats
@@ -96,7 +98,7 @@ public class MagicUser extends PlayerSaveDataSection {
 		Double gainedExpRhun = ExpListener.rhunExpBuffer.get(character.getUsername());
 		expRhun += gainedExpRhun!=null ? gainedExpRhun : 0;
 		
-		//player.sendMessage(Utils.infoText+"[Magic Debug] Your newly gained XP includes: Warg "+gainedExpWarg+" XP, Eborite "+gainedExpEborite+" XP, Sholk "+gainedExpSholk+" XP, Rhun "+gainedExpRhun+" XP.");		
+		//Utils.notifyAdmins(Utils.infoText+"[Magic Debug] Gained XP for "+character.getName()+" includes: Warg "+gainedExpWarg+" XP, Eborite "+gainedExpEborite+" XP, Sholk "+gainedExpSholk+" XP, Rhun "+gainedExpRhun+" XP.");		
 		
 		// Empty the buffers
 		ExpListener.wargExpBuffer.remove(character.getUsername());
