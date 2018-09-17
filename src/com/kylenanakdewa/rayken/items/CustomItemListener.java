@@ -3,6 +3,7 @@ package com.kylenanakdewa.rayken.items;
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 
+import org.bukkit.Material;
 import org.bukkit.block.Container;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -11,15 +12,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 
 /**
  * CustomItemListener
@@ -38,6 +42,8 @@ public class CustomItemListener implements Listener {
             if(item.getItemMeta().hasItemFlag(flag)) return true;
         }
         if(hasIllegalEnchantments(item)) return true;
+
+        if(item.getItemMeta() instanceof PotionMeta && ((PotionMeta)item.getItemMeta()).hasCustomEffects()) return true;
 
         return false;
     }
@@ -84,6 +90,7 @@ public class CustomItemListener implements Listener {
      */
     @EventHandler
     public void blockIllegalAttacks(EntityDamageByEntityEvent event){
+        if(event.isCancelled()) return;
         if(!event.getDamager().getType().equals(EntityType.PLAYER) 
         && !event.getCause().equals(DamageCause.ENTITY_ATTACK) 
         && !event.getCause().equals(DamageCause.ENTITY_SWEEP_ATTACK) 
@@ -93,26 +100,31 @@ public class CustomItemListener implements Listener {
     }
     @EventHandler
     public void blockIllegalBows(EntityShootBowEvent event){
+        if(event.isCancelled()) return;
         if(!event.getEntity().getType().equals(EntityType.PLAYER)) return;
 
         if(blockIllegalItem((Player)event.getEntity(), event.getBow())) event.setCancelled(true);
     }
     @EventHandler
     public void blockIllegalInteract(PlayerInteractEvent event){
+        if(event.isCancelled()) return;
         if(blockIllegalItem(event.getPlayer(), event.getItem())) event.setCancelled(true);
     }
     @EventHandler
     public void blockIllegalEquip(InventoryClickEvent event){
+        if(event.isCancelled()) return;
         if(!event.getSlotType().equals(InventoryType.SlotType.ARMOR)) return;
 
         if(blockIllegalItem((Player)event.getWhoClicked(), event.getCursor())) event.setCancelled(true);
     }
     @EventHandler
     public void blockIllegalItemDispense(BlockDispenseEvent event){
+        if(event.isCancelled()) return;
         if(hasIllegalEnchantments(event.getItem())) event.setCancelled(true);
     }
     @EventHandler
     public void blockIllegalStorage(InventoryMoveItemEvent event){
+        if(event.isCancelled()) return;
         if(!event.getSource().getType().equals(InventoryType.PLAYER)) return;
         if(!event.getDestination().getType().equals(InventoryType.ENDER_CHEST) && !event.getDestination().getType().equals(InventoryType.SHULKER_BOX) && !isTARDISChest(event.getDestination())) return;
 
@@ -120,11 +132,22 @@ public class CustomItemListener implements Listener {
     }
     @EventHandler
     public void blockIllegalDuplication(InventoryClickEvent event){
+        if(event.isCancelled()) return;
         if(!event.getAction().equals(InventoryAction.CLONE_STACK)) return;
 
         if(blockIllegalItem((Player)event.getWhoClicked(), event.getCurrentItem())) event.setCancelled(true);
 
         else if(isCustomItem(event.getCurrentItem()) && !event.getWhoClicked().hasPermission("magic.itemoverride")) event.setCancelled(true);
+    }
+    @EventHandler
+    public void blockIllegalItemConsume(PlayerItemConsumeEvent event){
+        if(event.isCancelled()) return;
+        if(isCustomItem(event.getItem())) event.setCancelled(true);
+    }
+    @EventHandler
+    public void blockIllegalSplashPotion(PotionSplashEvent event){
+        if(event.isCancelled()) return;
+        if(isCustomItem(event.getPotion().getItem())) event.setCancelled(true);
     }
 
 
