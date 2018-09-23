@@ -1,6 +1,8 @@
 package com.kylenanakdewa.rayken.listeners;
 
 import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -10,6 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
@@ -51,7 +54,7 @@ public final class ExpListener implements Listener {
 	@EventHandler
 	public void expGain(PlayerExpChangeEvent event){
 		// Only do this if it's not 5xp, since that's the amount you get for normal mobs
-		if(event.getAmount()>5){
+		if(event.getAmount()>5 && event.getPlayer().getTotalExperience()<1500){
 			// Exp gained per branch
 			double expGained = event.getAmount()*0.01;
 
@@ -129,6 +132,7 @@ public final class ExpListener implements Listener {
 	
 	
 	// Rhun Exp gain - killing
+	private static HashMap<UUID,UUID> lastPlayerKilled = new HashMap<UUID,UUID>();
 	@EventHandler
 	public void huntingExpGain(EntityDeathEvent event){
 		// Get the killer
@@ -138,9 +142,18 @@ public final class ExpListener implements Listener {
 		if(player!=null && event.getEntityType()==EntityType.PLAYER){
 			// If they killed a player, 4xp
 			double expGained = event.getDroppedExp()*0.1;
+
+			// Boost it 1.5x if it was caused by TNT
+			if(event.getEntity().getLastDamageCause().getCause().equals(DamageCause.BLOCK_EXPLOSION)) expGained = expGained*1.5;
+			// Halve gained XP if it's a repeated kill (to prevent abuse)
+			if(lastPlayerKilled.get(player.getUniqueId()).equals(event.getEntity().getUniqueId())) expGained = expGained/2;
+
 			addToBuffer(rhunExpBuffer, player, expGained);
-			
+
 			//player.sendMessage(Utils.infoText+"You collected "+expGained+" Rhun XP from hunting.");
+
+			// Reduce XP for next kill
+			lastPlayerKilled.put(player.getUniqueId(), event.getEntity().getUniqueId());
 		}
 	}
 }
