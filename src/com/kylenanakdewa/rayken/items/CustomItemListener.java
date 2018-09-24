@@ -90,7 +90,7 @@ public class CustomItemListener implements Listener {
      */
     @EventHandler
     public void blockIllegalAttacks(EntityDamageByEntityEvent event){
-        if(event.isCancelled()) return;
+        if(event.isCancelled() || !event.getDamager().getType().equals(EntityType.PLAYER)) return;
         if(!event.getDamager().getType().equals(EntityType.PLAYER) 
         && !event.getCause().equals(DamageCause.ENTITY_ATTACK) 
         && !event.getCause().equals(DamageCause.ENTITY_SWEEP_ATTACK) 
