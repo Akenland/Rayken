@@ -3,12 +3,12 @@ package com.kylenanakdewa.rayken.items;
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 
-import org.bukkit.Material;
 import org.bukkit.block.Container;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -63,7 +63,7 @@ public class CustomItemListener implements Listener {
      * Warns use of an illegal item.
      */
     public static boolean blockIllegalItem(Player player, ItemStack item){
-        if(player.hasPermission("magic.itemoverride")) return false;
+        if(player.hasPermission("magic.itemoverride") || item==null || !item.getType().isItem()) return false;
 
         if(hasIllegalEnchantments(item)){
             Utils.sendActionBar(player, CommonColors.ERROR+"You can't use this item!");
@@ -107,7 +107,7 @@ public class CustomItemListener implements Listener {
     }
     @EventHandler
     public void blockIllegalInteract(PlayerInteractEvent event){
-        if(event.isCancelled()) return;
+        if(event.isCancelled() || event.getAction().equals(Action.PHYSICAL)) return;
         if(blockIllegalItem(event.getPlayer(), event.getItem())) event.setCancelled(true);
     }
     @EventHandler
