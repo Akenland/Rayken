@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.items.CustomItemListener;
 import com.kylenanakdewa.rayken.listeners.ExpListener;
@@ -13,7 +14,6 @@ import com.kylenanakdewa.rayken.listeners.ExpListener;
 
 public class MagicPlugin extends JavaPlugin {
 
-	@Deprecated
 	public static MagicPlugin plugin;
 
 	@Override
@@ -34,14 +34,14 @@ public class MagicPlugin extends JavaPlugin {
 		case "magic":
 			// If no args, return basic information
 			if(args.length==0) {
-				sender.sendMessage(Utils.messageText+"Rayken "+getDescription().getVersion()+" by Kyle Nanakdewa");
-				sender.sendMessage(Utils.messageText+"Magic based around the lore of Akenland");
+				sender.sendMessage(CommonColors.MESSAGE+"Rayken "+getDescription().getVersion()+" by Kyle Nanakdewa");
+				sender.sendMessage(CommonColors.MESSAGE+"Magic based around the lore of Akenland");
 				return true;
 			}
 			
 			// Check permissions if command is from a player
 			if(sender instanceof Player && !sender.hasPermission("magic."+args[0])){
-				sender.sendMessage(Utils.errorText+"You can't use this Magic command! Ask an "+ChatColor.DARK_PURPLE+"Admin"+Utils.errorText+" for help.");
+				sender.sendMessage(CommonColors.ERROR+"You can't use this Magic command! Ask an "+ChatColor.DARK_PURPLE+"Admin"+CommonColors.ERROR+" for help.");
 				return true;
 			}
 			
@@ -52,7 +52,7 @@ public class MagicPlugin extends JavaPlugin {
 				if(args.length==1 && sender instanceof Player) return new MagicUser((Player) sender).displayExp(sender);
 				if(args.length==2 && sender.hasPermission("magic.xp.others")){
 					Player player = Utils.getPlayer(args[1]);
-					if(player==null){Utils.sendActionBar(sender, Utils.errorText+"Player not found"); return false;}
+					if(player==null){Utils.sendActionBar(sender, CommonColors.ERROR+"Player not found"); return false;}
 					return new MagicUser(player).displayExp(sender);
 				}
 			}
@@ -64,7 +64,7 @@ public class MagicPlugin extends JavaPlugin {
 			
 		// Command not set up
 		default:
-			sender.sendMessage(Utils.errorText+"This command is not set up in Rayken. Yell at Kyle if you want it fixed.");
+			sender.sendMessage(CommonColors.ERROR+"This command is not set up in Rayken. Yell at Kyle if you want it fixed.");
 			return false;
 		}
 	}

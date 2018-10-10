@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import com.kylenanakdewa.rayken.listeners.ExpListener;
 import com.kylenanakdewa.rayken.utils.ExpUtils;
-import com.kylenanakdewa.core.common.Utils;
+import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.savedata.PlayerSaveDataSection;
 import com.kylenanakdewa.core.characters.players.PlayerCharacter;
 
@@ -98,7 +98,7 @@ public class MagicUser extends PlayerSaveDataSection {
 		Double gainedExpRhun = ExpListener.rhunExpBuffer.get(character.getUsername());
 		expRhun += gainedExpRhun!=null ? gainedExpRhun : 0;
 		
-		//Utils.notifyAdmins(Utils.infoText+"[Magic Debug] Gained XP for "+character.getName()+" includes: Warg "+gainedExpWarg+" XP, Eborite "+gainedExpEborite+" XP, Sholk "+gainedExpSholk+" XP, Rhun "+gainedExpRhun+" XP.");		
+		//Utils.notifyAdmins(CommonColors.INFO+"[Magic Debug] Gained XP for "+character.getName()+" includes: Warg "+gainedExpWarg+" XP, Eborite "+gainedExpEborite+" XP, Sholk "+gainedExpSholk+" XP, Rhun "+gainedExpRhun+" XP.");		
 		
 		// Empty the buffers
 		ExpListener.wargExpBuffer.remove(character.getUsername());
@@ -211,11 +211,11 @@ public class MagicUser extends PlayerSaveDataSection {
 		if(args.length==0){
 			if(unlockedSpells!=null){
 				// List spells
-				player.sendMessage(Utils.infoText+"--- Your Spells ---");
+				player.sendMessage(CommonColors.INFO+"--- Your Spells ---");
 				for(Map.Entry<String, Object> spell : unlockedSpells.entrySet()){
 					player.sendMessage(Utils.messageText+"- "+spell.getKey()+" "+spell.getValue());
 				}
-				player.sendMessage(Utils.infoText+"- Type "+ChatColor.LIGHT_PURPLE+"/spell <spell name>"+Utils.infoText+" to activate a spell, then right-click with an empty hand to cast it.");
+				player.sendMessage(CommonColors.INFO+"- Type "+ChatColor.LIGHT_PURPLE+"/spell <spell name>"+CommonColors.INFO+" to activate a spell, then right-click with an empty hand to cast it.");
 				return true;
 			}
 			Utils.sendActionBar(player, "You don't know any spells!");
@@ -236,7 +236,7 @@ public class MagicUser extends PlayerSaveDataSection {
 	
 	// Display this magicuser's xp
 	boolean displayExp(CommandSender sender){
-		sender.sendMessage(Utils.infoText+"--- Magic XP: "+character.getName()+Utils.infoText+" ---");
+		sender.sendMessage(CommonColors.INFO+"--- Magic XP: "+character.getName()+CommonColors.INFO+" ---");
 		sender.sendMessage(Branch.WARG.getColor()+"- "+Branch.WARG.getName()+" Level "+levelWarg+", "+expWarg+" XP");
 		sender.sendMessage(Branch.EBORITE.getColor()+"- "+Branch.EBORITE.getName()+" Level "+levelEborite+", "+expEborite+" XP");
 		sender.sendMessage(Branch.SHOLK.getColor()+"- "+Branch.SHOLK.getName()+" Level "+levelSholk+", "+expSholk+" XP");
