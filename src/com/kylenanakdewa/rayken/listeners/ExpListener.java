@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
@@ -43,7 +44,7 @@ public final class ExpListener implements Listener {
 	}
 	
 	// Transfer exp from buffer to file when player quits
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOW)
 	public void playerQuit(PlayerQuitEvent event){
 		// Whenever MagicUser is instantiated, it automatically saves exp in the buffers, calculates levels, and saves to file
 		new MagicUser(event.getPlayer());
