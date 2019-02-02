@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.MagicUser;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
@@ -265,19 +266,24 @@ public class CustomItem {
         if(event instanceof PlayerEvent){
             MagicUser player = new MagicUser(((PlayerEvent)event).getPlayer());
             ItemLevel levels = getItemLevel();
+            boolean playerLevelTooLow = false;
 
             if(player.getLevelWarg() >= levels.branchLevels.get(Branch.WARG)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.WARG)) ench.use(event, itemStack);
-            });
+            }); else playerLevelTooLow = true;
             if(player.getLevelEbori() >= levels.branchLevels.get(Branch.EBORI)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.EBORI)) ench.use(event, itemStack);
-            });
+            }); else playerLevelTooLow = true;
             if(player.getLevelSholk() >= levels.branchLevels.get(Branch.SHOLK)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.SHOLK)) ench.use(event, itemStack);
-            });
+            }); else playerLevelTooLow = true;
             if(player.getLevelRhun() >= levels.branchLevels.get(Branch.RHUN)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.RHUN)) ench.use(event, itemStack);
-            });
+            }); else playerLevelTooLow = true;
+
+            if(playerLevelTooLow){
+                Utils.sendActionBar(((PlayerEvent)event).getPlayer(), ChatColor.RED+"You don't understand this item's magic!");
+            }
         }
         else enchantments.forEach(ench -> ench.use(event, itemStack));
     }

@@ -1,5 +1,6 @@
 package com.kylenanakdewa.rayken.items.enchantments;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -26,7 +27,9 @@ public abstract class DamageMagicEnchantment extends MagicEnchantment {
     @Override
     protected void action(Event event, ItemStack item) {
         EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent)event;
-		damageEvent.setDamage(getNewDamage(damageEvent, item));
+        damageEvent.setDamage(getNewDamage(damageEvent, item));
+
+        Utils.notifyAdmins(name+" changed damage from "+damageEvent.getDamage()+" to "+getNewDamage(damageEvent, item));
     }
 
 
