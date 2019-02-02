@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
+import com.kylenanakdewa.rayken.MagicPlugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -114,7 +115,7 @@ public final class CustomItemListener implements Listener {
     @EventHandler
     public void customItemEnchant(EnchantItemEvent event) {
         if(event.isCancelled()) return;
-        getCustomItem(event.getItem()).setCrafter(event.getEnchanter().getDisplayName());
+        Bukkit.getScheduler().scheduleSyncDelayedTask(MagicPlugin.plugin, () -> getCustomItem(event.getItem()).setCrafter(event.getEnchanter().getDisplayName()));
     }
     @EventHandler
     public void customItemDamage(EntityDamageByEntityEvent event) {
