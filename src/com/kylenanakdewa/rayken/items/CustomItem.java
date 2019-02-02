@@ -57,6 +57,15 @@ public class CustomItem {
         enchantments = getMagicEnchantments();
     }
 
+
+    /**
+     * Gets the ItemStack.
+     */
+    public ItemStack getItem() {
+        return itemStack;
+    }
+
+
     /**
      * Gets the name of this item. Will attempt to return the display name, then the
      * localized name, then the material name.
@@ -95,6 +104,7 @@ public class CustomItem {
         lore.add(ChatColor.RESET.toString());
         lore.add(getItemLevel().getLevelString());
         itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
     }
 
     /**
