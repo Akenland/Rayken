@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
 
 import org.bukkit.ChatColor;
@@ -143,6 +144,7 @@ public final class EnchantmentUtils {
         if(levelString==null) levelString = level+"";
         levelString = (level==1 && enchantment.getMaxLevel()==1) ? "" : " "+levelString;
 
+        Utils.notifyAdmins(ChatColor.GRAY+enchantmentName+levelString);
         return ChatColor.GRAY+enchantmentName+levelString;
     }
 

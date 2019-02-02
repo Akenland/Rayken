@@ -144,10 +144,10 @@ public class CustomItem {
         if(!itemMeta.hasLore()) return enchantments;
 
         for (String line : itemMeta.getLore()) {
-            if(line.length()> 2&& line.startsWith(ChatColor.RESET + ChatColor.LIGHT_PURPLE.toString() + ChatColor.GRAY)) {
-                Utils.notifyAdmins("Found enchant with name "+line);
+            if(line.length()>2 && line.startsWith(ChatColor.RESET + ChatColor.LIGHT_PURPLE.toString() + ChatColor.GRAY)) {
                 MagicEnchantment enchant = MagicEnchantment.getByFriendlyName(line);
-                if(enchant != null) enchantments.add(enchant);
+                if(enchant!=null) enchantments.add(enchant);
+                Utils.notifyAdmins("Found enchant "+enchant.getName()+" "+enchant.getLevel());
             }
         }
         return enchantments;
