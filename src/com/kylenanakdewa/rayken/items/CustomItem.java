@@ -101,13 +101,12 @@ public class CustomItem {
      * Gets the description of this item. The description is displayed at the top of
      * the lore section, above enchantments.
      * 
-     * @return the description, or null if there is no description
+     * @return the description, or an empty list if there is no description
      */
     public List<String> getDescription() {
-        if (!itemMeta.hasLore())
-            return null;
+        if(!itemMeta.hasLore()) return new ArrayList<String>();
 
-        List<String> desc = itemMeta.getLore();
+        List<String> desc = new ArrayList<String>(itemMeta.getLore());
         desc.removeIf(line -> line.length() > 2 && line.startsWith(ChatColor.RESET.toString()));
 
         return desc;
