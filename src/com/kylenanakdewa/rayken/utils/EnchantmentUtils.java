@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
 
 import org.bukkit.ChatColor;
@@ -144,7 +143,6 @@ public final class EnchantmentUtils {
         if(levelString==null) levelString = level+"";
         levelString = (level==1 && enchantment.getMaxLevel()==1) ? "" : " "+levelString;
 
-        Utils.notifyAdmins(ChatColor.GRAY+enchantmentName+levelString);
         return ChatColor.GRAY+enchantmentName+levelString;
     }
 
@@ -170,7 +168,6 @@ public final class EnchantmentUtils {
      * Gets the weight of a vanilla enchantment.
      */
     public static double getEnchantmentWeight(Enchantment enchantment, int level){
-        Utils.notifyAdmins(enchantment.getName());
         //// BOW
         // Power
         if(enchantment.getName().equals("ARROW_DAMAGE")){

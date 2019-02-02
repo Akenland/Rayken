@@ -72,8 +72,7 @@ public class CustomItem {
      * localized name, then the material name.
      */
     public String getName() {
-        return itemMeta.hasDisplayName() ? itemMeta.getDisplayName()
-                : itemMeta.hasLocalizedName() ? itemMeta.getLocalizedName() : itemStack.getType().toString();
+        return itemMeta.hasDisplayName() ? itemMeta.getDisplayName() : itemMeta.hasLocalizedName() ? itemMeta.getLocalizedName() : itemStack.getType().toString();
     }
 
     /**
@@ -146,7 +145,6 @@ public class CustomItem {
         for (String line : itemMeta.getLore()) {
             if(line.length()>2 && line.startsWith(ChatColor.RESET + ChatColor.LIGHT_PURPLE.toString() + ChatColor.GRAY)) {
                 MagicEnchantment enchant = MagicEnchantment.getByFriendlyName(line);
-                if(enchant!=null) enchant = MagicEnchantment.getById(ChatColor.stripColor(line), 1);
                 if(enchant!=null) enchantments.add(enchant);
             }
         }
