@@ -170,6 +170,7 @@ public final class EnchantmentUtils {
      * Gets the weight of a vanilla enchantment.
      */
     public static double getEnchantmentWeight(Enchantment enchantment, int level){
+        Utils.notifyAdmins(enchantment.getName());
         //// BOW
         // Power
         if(enchantment.getName().equals("ARROW_DAMAGE")){
