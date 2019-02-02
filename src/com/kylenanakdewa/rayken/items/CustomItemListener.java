@@ -106,7 +106,7 @@ public final class CustomItemListener implements Listener {
      */
     @EventHandler
     public void customItemInteract(PlayerInteractEvent event) {
-        if(event.isCancelled() || event.getAction().equals(Action.PHYSICAL)) return;
+        if(event.isCancelled() || event.getAction().equals(Action.PHYSICAL) || !event.hasItem() || event.getItem()==null || event.getItem().getType().isBlock()) return;
         if(isCustomItem(event.getItem())){
             getCustomItem(event.getItem()).triggerEnchantments(event);
         }
@@ -119,8 +119,8 @@ public final class CustomItemListener implements Listener {
     @EventHandler
     public void customItemDamage(EntityDamageByEntityEvent event) {
         if(event.isCancelled() 
-        || (!event.getDamager().getType().equals(EntityType.PLAYER) 
-        && !event.getCause().equals(DamageCause.ENTITY_ATTACK) 
+        || !event.getDamager().getType().equals(EntityType.PLAYER)
+        ||(!event.getCause().equals(DamageCause.ENTITY_ATTACK) 
         && !event.getCause().equals(DamageCause.ENTITY_SWEEP_ATTACK) 
         && !event.getCause().equals(DamageCause.PROJECTILE))) return;
 
@@ -128,8 +128,8 @@ public final class CustomItemListener implements Listener {
         ItemStack mainItem = player.getInventory().getItemInMainHand();
         ItemStack sideItem = player.getInventory().getItemInOffHand();
 
-        if(isCustomItem(mainItem)) getCustomItem(mainItem).triggerEnchantments(event);
-        if(isCustomItem(sideItem)) getCustomItem(sideItem).triggerEnchantments(event);
+        if(mainItem!=null && mainItem.getType().isItem() && isCustomItem(mainItem)) getCustomItem(mainItem).triggerEnchantments(event);
+        if(sideItem!=null && sideItem.getType().isItem() && isCustomItem(sideItem)) getCustomItem(sideItem).triggerEnchantments(event);
     }
 
 
