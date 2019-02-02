@@ -94,11 +94,11 @@ public abstract class MagicEnchantment {
 		enchantmentRegistry.putIfAbsent(id.toUpperCase(), enchantmentClass);
 		enchantmentFriendlyMap.putIfAbsent(name, id.toUpperCase());
 
-		try {
+		/*try {
 			enchantmentClass.getConstructor(int.class).newInstance(1);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		Utils.notifyAdmins("Registered "+id+" - "+name);
 	}

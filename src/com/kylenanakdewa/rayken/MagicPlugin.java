@@ -29,6 +29,7 @@ public class MagicPlugin extends JavaPlugin {
 
 		// Register enchantments
 		MagicEnchantment.registerEnchantment(LastWord.class, "DAMAGE_LOWHEALTH", "Last Word");
+		new LastWord(1);
 	}
 
 	@Override
