@@ -101,6 +101,8 @@ public abstract class MagicEnchantment {
 		}*/
 
 		Utils.notifyAdmins("Registered "+id+" - "+name);
+		Utils.notifyAdmins(enchantmentRegistry.size()+" enchantments registered.");
+		enchantmentRegistry.keySet().forEach(key -> Utils.notifyAdmins(" - "+key+" - "+enchantmentFriendlyMap.get(key)));
 	}
 
 
