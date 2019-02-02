@@ -9,6 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.items.CustomItemListener;
+import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
+import com.kylenanakdewa.rayken.items.enchantments.warg.LastWord;
 import com.kylenanakdewa.rayken.listeners.ExpListener;
 //import com.kylenanakdewa.RealmsMagic.Listeners.SpellCastListener;
 
@@ -24,6 +26,9 @@ public class MagicPlugin extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new ExpListener(), this);
 		getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
 		//getServer().getPluginManager().registerEvents(new SpellCastListener(), this);
+
+		// Register enchantments
+		MagicEnchantment.registerEnchantment(LastWord.class, "DAMAGE_LOWHEALTH", "Last Word");
 	}
 
 	@Override

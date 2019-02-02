@@ -119,7 +119,7 @@ public class MagicUser extends PlayerSaveDataSection {
 			switch(branch){
 			case WARG:
 				level = levelWarg; exp = expWarg; break;
-			case EBORITE:
+			case EBORI:
 				level = levelEborite; exp = expEborite; break;
 			case SHOLK:
 				level = levelSholk; exp = expSholk; break;
@@ -129,7 +129,7 @@ public class MagicUser extends PlayerSaveDataSection {
 				break;
 			}
 
-			while(branch==Branch.WARG || branch==Branch.EBORITE || branch==Branch.SHOLK || branch==Branch.RHUN){
+			while(branch==Branch.WARG || branch==Branch.EBORI || branch==Branch.SHOLK || branch==Branch.RHUN){
 				double expRequired = ExpUtils.getExpToLevelUp(level); // represents how much exp is needed to get to next level
 
 				// If not enough xp to advance to next level, converting is finished
@@ -148,7 +148,7 @@ public class MagicUser extends PlayerSaveDataSection {
 			switch(branch){
 			case WARG:
 				levelWarg = level; expWarg = exp; break;
-			case EBORITE:
+			case EBORI:
 				levelEborite = level; expEborite = exp; break;
 			case SHOLK:
 				levelSholk = level; expSholk = exp; break;
@@ -238,10 +238,63 @@ public class MagicUser extends PlayerSaveDataSection {
 	boolean displayExp(CommandSender sender){
 		sender.sendMessage(CommonColors.INFO+"--- Magic XP: "+character.getName()+CommonColors.INFO+" ---");
 		sender.sendMessage(Branch.WARG.getColor()+"- "+Branch.WARG.getName()+" Level "+levelWarg+", "+expWarg+" XP");
-		sender.sendMessage(Branch.EBORITE.getColor()+"- "+Branch.EBORITE.getName()+" Level "+levelEborite+", "+expEborite+" XP");
+		sender.sendMessage(Branch.EBORI.getColor()+"- "+Branch.EBORI.getName()+" Level "+levelEborite+", "+expEborite+" XP");
 		sender.sendMessage(Branch.SHOLK.getColor()+"- "+Branch.SHOLK.getName()+" Level "+levelSholk+", "+expSholk+" XP");
 		sender.sendMessage(Branch.RHUN.getColor()+"- "+Branch.RHUN.getName()+" Level "+levelRhun+", "+expRhun+" XP");
 		
 		return true;
 	}
+
+	/**
+	 * @return the levelWarg
+	 */
+	public int getLevelWarg() {
+		return levelWarg;
+	}
+	/**
+	 * @return the expWarg
+	 */
+	public double getExpWarg() {
+		return expWarg;
+	}
+
+	/**
+	 * @return the levelEborite
+	 */
+	public int getLevelEbori() {
+		return levelEborite;
+	}
+	/**
+	 * @return the expEborite
+	 */
+	public double getExpEbori() {
+		return expEborite;
+	}
+
+	/**
+	 * @return the levelSholk
+	 */
+	public int getLevelSholk() {
+		return levelSholk;
+	}
+	/**
+	 * @return the expSholk
+	 */
+	public double getExpSholk() {
+		return expSholk;
+	}
+
+	/**
+	 * @return the levelRhun
+	 */
+	public int getLevelRhun() {
+		return levelRhun;
+	}
+	/**
+	 * @return the expRhun
+	 */
+	public double getExpRhun() {
+		return expRhun;
+	}
+
 }

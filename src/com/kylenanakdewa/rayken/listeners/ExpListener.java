@@ -141,11 +141,11 @@ public final class ExpListener implements Listener {
 		
 		// If killer is not null, give them the XP
 		if(player!=null && event.getEntityType()==EntityType.PLAYER){
-			// If they killed a player, 4xp
-			double expGained = event.getDroppedExp()*0.1;
+			// If they killed a player, up to 32xp
+			double expGained = event.getDroppedExp()*0.32;
 
-			// Boost it 1.5x if it was caused by TNT
-			if(event.getEntity().getLastDamageCause().getCause().equals(DamageCause.BLOCK_EXPLOSION)) expGained = expGained*1.5;
+			// Boost it 2x if it was caused by TNT
+			if(event.getEntity().getLastDamageCause().getCause().equals(DamageCause.BLOCK_EXPLOSION)) expGained = expGained*2;
 			// Halve gained XP if it's a repeated kill (to prevent abuse)
 			if(lastPlayerKilled.get(player.getUniqueId()).equals(event.getEntity().getUniqueId())) expGained = expGained/2;
 
