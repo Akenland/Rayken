@@ -146,8 +146,8 @@ public class CustomItem {
         for (String line : itemMeta.getLore()) {
             if(line.length()>2 && line.startsWith(ChatColor.RESET + ChatColor.LIGHT_PURPLE.toString() + ChatColor.GRAY)) {
                 MagicEnchantment enchant = MagicEnchantment.getByFriendlyName(line);
+                if(enchant!=null) enchant = MagicEnchantment.getById(ChatColor.stripColor(line), 1);
                 if(enchant!=null) enchantments.add(enchant);
-                Utils.notifyAdmins("Found enchant "+enchant.getName()+" "+enchant.getLevel());
             }
         }
         return enchantments;
