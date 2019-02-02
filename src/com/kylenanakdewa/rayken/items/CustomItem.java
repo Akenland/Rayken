@@ -91,18 +91,21 @@ public class CustomItem {
         List<String> lore = new ArrayList<String>();
         if (itemMeta.hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
             lore.addAll(description);
-            lore.add(ChatColor.RESET.toString());
+            if(!description.isEmpty()) lore.add(ChatColor.RESET.toString());
             lore.addAll(getEnchantmentStrings(true));
-            
+            if(!getEnchantmentStrings(true).isEmpty()) lore.add(ChatColor.RESET.toString());
         } else {
             lore.addAll(getEnchantmentStrings(false));
-            lore.add(ChatColor.RESET.toString());
+            if(!getEnchantmentStrings(false).isEmpty()) lore.add(ChatColor.RESET.toString());
             lore.addAll(description);
+            if(!description.isEmpty()) lore.add(ChatColor.RESET.toString());
         }
-        lore.add(ChatColor.RESET.toString());
-        lore.add(crafter);
-        lore.add(ChatColor.RESET.toString());
+        if(crafter!=null){
+            lore.add(crafter);
+            lore.add(ChatColor.RESET.toString());
+        }
         lore.add(getItemLevel().getLevelString());
+
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
     }
@@ -202,7 +205,7 @@ public class CustomItem {
      * Sets the crafter of this item.
      */
     public void setCrafter(String crafter) {
-        this.crafter = crafter;
+        this.crafter = ChatColor.RESET + ChatColor.GOLD.toString() + ChatColor.GRAY + ChatColor.ITALIC + "Crafted by " + crafter;
         updateLore();
     }
 
