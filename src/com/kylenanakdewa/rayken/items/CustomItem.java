@@ -179,7 +179,7 @@ public class CustomItem {
         List<String> enchants = new ArrayList<String>();
 
         if(includeVanilla){
-            for(Entry<Enchantment,Integer> ench : itemMeta.getEnchants().entrySet())
+            for(Entry<Enchantment,Integer> ench : itemStack.getEnchantments().entrySet())
                 enchants.add(EnchantmentUtils.getEnchantmentFriendlyName(ench.getKey(), ench.getValue()));
         }
 
