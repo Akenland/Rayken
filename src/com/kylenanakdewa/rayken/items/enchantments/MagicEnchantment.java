@@ -92,7 +92,7 @@ public abstract class MagicEnchantment {
 	 */
 	public static void registerEnchantment(Class<? extends MagicEnchantment> enchantmentClass, String id, String name){
 		enchantmentRegistry.putIfAbsent(id.toUpperCase(), enchantmentClass);
-		enchantmentFriendlyMap.putIfAbsent(name, id.toUpperCase());
+		enchantmentFriendlyMap.putIfAbsent(name.toUpperCase(), id.toUpperCase());
 
 		/*try {
 			enchantmentClass.getConstructor(int.class).newInstance(1);
@@ -102,7 +102,7 @@ public abstract class MagicEnchantment {
 
 		Utils.notifyAdmins("Registered "+id+" - "+name);
 		Utils.notifyAdmins(enchantmentRegistry.size()+" enchantments registered.");
-		enchantmentRegistry.keySet().forEach(key -> Utils.notifyAdmins(" - "+key+" - "+enchantmentFriendlyMap.get(key)));
+		enchantmentRegistry.keySet().forEach(key -> Utils.notifyAdmins(" - "+key));
 	}
 
 
