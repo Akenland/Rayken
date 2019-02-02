@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 
 import org.bukkit.ChatColor;
@@ -93,16 +92,6 @@ public abstract class MagicEnchantment {
 	public static void registerEnchantment(Class<? extends MagicEnchantment> enchantmentClass, String id, String name){
 		enchantmentRegistry.putIfAbsent(id.toUpperCase(), enchantmentClass);
 		enchantmentFriendlyMap.putIfAbsent(name.toUpperCase(), id.toUpperCase());
-
-		/*try {
-			enchantmentClass.getConstructor(int.class).newInstance(1);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		}*/
-
-		Utils.notifyAdmins("Registered "+id+" - "+name);
-		Utils.notifyAdmins(enchantmentRegistry.size()+" enchantments registered.");
-		enchantmentRegistry.keySet().forEach(key -> Utils.notifyAdmins(" - "+key));
 	}
 
 

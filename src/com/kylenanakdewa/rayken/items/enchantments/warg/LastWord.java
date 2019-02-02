@@ -1,5 +1,6 @@
 package com.kylenanakdewa.rayken.items.enchantments.warg;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.items.enchantments.DamageMagicEnchantment;
 
@@ -28,6 +29,8 @@ public class LastWord extends DamageMagicEnchantment {
 
         // Up to 2*level, reduced by health
         double addedDamage = level*2 - (health-1)*0.2;
+
+        Utils.notifyAdmins("Last Word added "+addedDamage+" damage!");
 
         return event.getDamage()+addedDamage;
     }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.MagicUser;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
@@ -244,7 +243,7 @@ public class CustomItem {
         }
         /** Gets the levels as a single string. */
         public String getLevelString(){
-            String string = ChatColor.RESET+ChatColor.DARK_GRAY.toString()+"Level "+getMainLevel();
+            String string = ChatColor.RESET+ChatColor.DARK_GRAY.toString()+"Level "+getMainLevel()+" ";
             for(Branch branch : Branch.values()) {
                 if(branchLevels.get(branch) > 0) string += branch.getColor().toString() + branchLevels.get(branch);
             }
