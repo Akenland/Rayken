@@ -97,7 +97,7 @@ public class CustomItem {
             if(!getEnchantmentStrings(true).isEmpty()) lore.add(ChatColor.RESET.toString());
         } else {
             lore.addAll(getEnchantmentStrings(false));
-            if(!getEnchantmentStrings(false).isEmpty()) lore.add(ChatColor.RESET.toString());
+            lore.add(ChatColor.RESET.toString());
             lore.addAll(description);
             if(!description.isEmpty()) lore.add(ChatColor.RESET.toString());
         }
