@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.MagicUser;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
@@ -143,7 +144,8 @@ public class CustomItem {
         if(!itemMeta.hasLore()) return enchantments;
 
         for (String line : itemMeta.getLore()) {
-            if(line.length() > 2 && line.startsWith(ChatColor.RESET + ChatColor.LIGHT_PURPLE.toString() + ChatColor.GRAY)) {
+            if(line.length()> 2&& line.startsWith(ChatColor.RESET + ChatColor.LIGHT_PURPLE.toString() + ChatColor.GRAY)) {
+                Utils.notifyAdmins("Found enchant with name "+line);
                 MagicEnchantment enchant = MagicEnchantment.getByFriendlyName(line);
                 if(enchant != null) enchantments.add(enchant);
             }

@@ -170,71 +170,71 @@ public final class EnchantmentUtils {
     public static double getEnchantmentWeight(Enchantment enchantment, int level){
         //// BOW
         // Power
-        if(enchantment.equals(Enchantment.ARROW_DAMAGE)){
+        if(enchantment.getName().equals("ARROW_DAMAGE")){
             return Math.round(0.25*(1+level)*9);
         }
         // Flame
-        if(enchantment.equals(Enchantment.ARROW_FIRE)){
+        if(enchantment.getName().equals("ARROW_FIRE")){
             return 4;
         }
         // Infinity
-        if(enchantment.equals(Enchantment.ARROW_INFINITE)){
+        if(enchantment.getName().equals("ARROW_INFINITE")){
             return 1;
         }
         // Punch
-        if(enchantment.equals(Enchantment.ARROW_KNOCKBACK)){
+        if(enchantment.getName().equals("ARROW_KNOCKBACK")){
             return level*3;
         }
 
         //// MELEE
         // Sharpness
-        if(enchantment.equals(Enchantment.DAMAGE_ALL)){
+        if(enchantment.getName().equals("DAMAGE_ALL")){
             return 1+0.5*(level-1);
         }
         // Bane of Arthropods, Smite, Looting, Sweeping Edge
-        if(enchantment.equals(Enchantment.DAMAGE_ARTHROPODS) || enchantment.equals(Enchantment.DAMAGE_UNDEAD) || enchantment.equals(Enchantment.LOOT_BONUS_MOBS) || enchantment.equals(Enchantment.SWEEPING_EDGE)){
+        if(enchantment.getName().equals("DAMAGE_ARTHROPODS") || enchantment.getName().equals("DAMAGE_UNDEAD") || enchantment.getName().equals("LOOT_BONUS_MOBS") || enchantment.getName().equals("SWEEPING_EDGE")){
             return level;
         }
         // Fire Aspect
-        if(enchantment.equals(Enchantment.FIRE_ASPECT)){
+        if(enchantment.getName().equals("FIRE_ASPECT")){
             return (4*level)-1;
         }
         // Knockback
-        if(enchantment.equals(Enchantment.KNOCKBACK)){
+        if(enchantment.getName().equals("KNOCKBACK")){
             return level*3;
         }
 
         //// TOOLS
         // Efficiency
-        if(enchantment.equals(Enchantment.DIG_SPEED) || enchantment.equals(Enchantment.SILK_TOUCH)){
+        if(enchantment.getName().equals("DIG_SPEED") || enchantment.getName().equals("SILK_TOUCH")){
             return level;
         }
         // Fortune
-        if(enchantment.equals(Enchantment.LOOT_BONUS_BLOCKS)){
+        if(enchantment.getName().equals("LOOT_BONUS_BLOCKS")){
             return level*2;
         }
 
 
         //// ARMOUR
         // Protection
-        if(enchantment.equals(Enchantment.PROTECTION_ENVIRONMENTAL) 
-        || enchantment.equals(Enchantment.PROTECTION_EXPLOSIONS) 
-        || enchantment.equals(Enchantment.PROTECTION_PROJECTILE) 
-        || enchantment.equals(Enchantment.PROTECTION_FIRE) 
-        || enchantment.equals(Enchantment.PROTECTION_FALL) 
-        || enchantment.equals(Enchantment.OXYGEN)){
+        if(enchantment.getName().equals("PROTECTION_ENVIRONMENTAL") 
+        || enchantment.getName().equals("PROTECTION_EXPLOSIONS") 
+        || enchantment.getName().equals("PROTECTION_PROJECTILE") 
+        || enchantment.getName().equals("PROTECTION_FIRE") 
+        || enchantment.getName().equals("PROTECTION_FALL") 
+        || enchantment.getName().equals("OXYGEN")){
             return level*2;
         }
         // Aqua Affinity and Respiration
-        if(enchantment.equals(Enchantment.WATER_WORKER)){
+        if(enchantment.getName().equals("WATER_WORKER")){
             return 2;
         }
         // Frost Walker
-        if(enchantment.equals(Enchantment.FROST_WALKER)){
+        if(enchantment.getName().equals("FROST_WALKER")){
             return level*2+2;
         }
         // Depth Strider and Thorns
-        if(enchantment.equals(Enchantment.DEPTH_STRIDER) || enchantment.equals(Enchantment.THORNS)){
+        if(enchantment.getName().equals("DEPTH_STRIDER") || enchantment.getName().equals("THORNS")){
             return level*3;
         }
 
