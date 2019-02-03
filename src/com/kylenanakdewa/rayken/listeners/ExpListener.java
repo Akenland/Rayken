@@ -19,6 +19,8 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import com.kylenanakdewa.core.common.CommonColors;
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.MagicUser;
 
 public final class ExpListener implements Listener {
@@ -151,6 +153,7 @@ public final class ExpListener implements Listener {
 
 			addToBuffer(rhunExpBuffer, player, expGained);
 
+			Utils.notifyAdmins(player.getDisplayName()+CommonColors.INFO+" collected "+expGained+" Rhun XP from hunting.");
 			//player.sendMessage(Utils.infoText+"You collected "+expGained+" Rhun XP from hunting.");
 
 			// Reduce XP for next kill
