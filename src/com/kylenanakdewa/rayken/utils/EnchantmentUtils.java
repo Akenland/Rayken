@@ -207,11 +207,11 @@ public final class EnchantmentUtils {
         //// TOOLS
         // Efficiency
         if(enchantment.getName().equals("DIG_SPEED") || enchantment.getName().equals("SILK_TOUCH")){
-            return level;
+            return level*2;
         }
         // Fortune
         if(enchantment.getName().equals("LOOT_BONUS_BLOCKS")){
-            return level*2;
+            return level*3;
         }
 
 

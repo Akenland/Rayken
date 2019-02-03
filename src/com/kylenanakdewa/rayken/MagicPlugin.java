@@ -10,6 +10,10 @@ import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.items.CustomItemListener;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
+import com.kylenanakdewa.rayken.items.enchantments.ebori.IceAspect;
+import com.kylenanakdewa.rayken.items.enchantments.ebori.Levitate;
+import com.kylenanakdewa.rayken.items.enchantments.warg.AirStrike;
+import com.kylenanakdewa.rayken.items.enchantments.warg.Charge;
 import com.kylenanakdewa.rayken.items.enchantments.warg.LastWord;
 import com.kylenanakdewa.rayken.listeners.ExpListener;
 //import com.kylenanakdewa.RealmsMagic.Listeners.SpellCastListener;
@@ -29,6 +33,10 @@ public class MagicPlugin extends JavaPlugin {
 
 		// Register enchantments
 		MagicEnchantment.registerEnchantment(LastWord.class, "DAMAGE_LOWHEALTH", "Last Word");
+		MagicEnchantment.registerEnchantment(Charge.class, "DAMAGE_SPRINTING", "Charge");
+		MagicEnchantment.registerEnchantment(AirStrike.class, "DAMAGE_AERIAL", "Air Strike");
+		MagicEnchantment.registerEnchantment(Levitate.class, "LEVITATE", "Levitate");
+		MagicEnchantment.registerEnchantment(IceAspect.class, "SLOWING", "Ice Aspect");
 	}
 
 	@Override
