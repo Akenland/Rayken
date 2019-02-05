@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.MagicUser;
@@ -17,7 +18,10 @@ import com.kylenanakdewa.rayken.utils.EnchantmentUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -262,27 +266,31 @@ public class CustomItem {
      * Triggers all magic enchantments on this item.
      */
     public void triggerEnchantments(Event event){
+        Utils.notifyAdmins(enchantments.size()+" enchantments triggered on "+getName());
+
         // Check player levels
-        if(event instanceof PlayerEvent){
-            MagicUser player = new MagicUser(((PlayerEvent)event).getPlayer());
+        if(event instanceof PlayerEvent || (event instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) event).getDamager().getType().equals(EntityType.PLAYER))){
+            Player player = event instanceof PlayerEvent ? ((PlayerEvent)event).getPlayer() : (Player)((EntityDamageByEntityEvent) event).getDamager();
+            MagicUser magicUser =  new MagicUser(player);
             ItemLevel levels = getItemLevel();
             boolean playerLevelTooLow = false;
 
-            if(player.getLevelWarg() >= levels.branchLevels.get(Branch.WARG)) enchantments.forEach(ench -> {
+            if(magicUser.getLevelWarg() >= levels.branchLevels.get(Branch.WARG)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.WARG)) ench.use(event, itemStack);
             }); else playerLevelTooLow = true;
-            if(player.getLevelEbori() >= levels.branchLevels.get(Branch.EBORI)) enchantments.forEach(ench -> {
+            if(magicUser.getLevelEbori() >= levels.branchLevels.get(Branch.EBORI)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.EBORI)) ench.use(event, itemStack);
             }); else playerLevelTooLow = true;
-            if(player.getLevelSholk() >= levels.branchLevels.get(Branch.SHOLK)) enchantments.forEach(ench -> {
+            if(magicUser.getLevelSholk() >= levels.branchLevels.get(Branch.SHOLK)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.SHOLK)) ench.use(event, itemStack);
             }); else playerLevelTooLow = true;
-            if(player.getLevelRhun() >= levels.branchLevels.get(Branch.RHUN)) enchantments.forEach(ench -> {
+            if(magicUser.getLevelRhun() >= levels.branchLevels.get(Branch.RHUN)) enchantments.forEach(ench -> {
                 if(ench.getBranch().equals(Branch.RHUN)) ench.use(event, itemStack);
             }); else playerLevelTooLow = true;
 
             if(playerLevelTooLow){
-                Utils.sendActionBar(((PlayerEvent)event).getPlayer(), ChatColor.RED+"You don't understand this item's magic!");
+                Utils.sendActionBar(player, ChatColor.RED+"You don't understand this item's magic!");
+                Utils.notifyAdmins(player.getDisplayName()+CommonColors.INFO+" does not have a high enough level to use "+getName());
             }
         }
         else enchantments.forEach(ench -> ench.use(event, itemStack));

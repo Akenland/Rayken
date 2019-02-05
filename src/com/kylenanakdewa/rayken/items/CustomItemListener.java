@@ -123,6 +123,9 @@ public final class CustomItemListener implements Listener {
         ItemStack mainItem = player.getInventory().getItemInMainHand();
         ItemStack sideItem = player.getInventory().getItemInOffHand();
 
+        if(mainItem!=null && isCustomItem(mainItem)) Utils.sendActionBar(player, player.getDisplayName()+" used "+getCustomItem(mainItem).getName());
+        if(sideItem!=null && isCustomItem(sideItem)) Utils.sendActionBar(player, player.getDisplayName()+" used "+getCustomItem(sideItem).getName());
+
         if(mainItem!=null && isCustomItem(mainItem)) getCustomItem(mainItem).triggerEnchantments(event);
         if(sideItem!=null && isCustomItem(sideItem)) getCustomItem(sideItem).triggerEnchantments(event);
     }

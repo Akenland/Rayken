@@ -4,7 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
+import com.kylenanakdewa.rayken.utils.EnchantmentUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
@@ -155,6 +157,8 @@ public abstract class MagicEnchantment {
 	public final void use(Event event, ItemStack item){
 		// Do the pre-use check to see if this magic enchantment will actually be used
 		if(!preUseCheck(event, item)) return;
+
+		Utils.notifyAdmins(EnchantmentUtils.getEnchantmentFriendlyName(this)+" was triggered!");
 
 		// Complete the action (defined by the subclass)
 		action(event, item);
