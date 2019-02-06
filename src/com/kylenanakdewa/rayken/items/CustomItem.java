@@ -182,11 +182,11 @@ public class CustomItem {
 
         if(includeVanilla){
             for(Entry<Enchantment,Integer> ench : itemStack.getEnchantments().entrySet())
-                enchants.add(EnchantmentUtils.getEnchantmentFriendlyName(ench.getKey(), ench.getValue()));
+                enchants.add(ChatColor.RESET + EnchantmentUtils.getEnchantmentFriendlyName(ench.getKey(), ench.getValue()));
         }
 
         for(MagicEnchantment ench : enchantments)
-            enchants.add(EnchantmentUtils.getEnchantmentFriendlyName(ench));
+            enchants.add(ChatColor.RESET+ChatColor.LIGHT_PURPLE.toString()+ChatColor.GRAY + EnchantmentUtils.getEnchantmentFriendlyName(ench));
 
         return enchants;
     }
@@ -243,11 +243,17 @@ public class CustomItem {
             return (int)Math.ceil(mainLevel);
         }
         /** Gets the level of the specified branch. */
-        public int getBranchLevel(Branch branch){
-            return (int)Math.ceil(branchLevels.get(branch));
+        public int getBranchLevel(Branch branch) {
+            return branchLevels.get(branch);
+        }
+        /** Gets the total levels (weight) of the magic branches. */
+        public int getTotalBranchLevels() {
+            int levels = 0;
+            for(int level : branchLevels.values()) levels += level;
+            return levels;
         }
         /** Gets the levels as a single string. */
-        public String getLevelString(){
+        public String getLevelString() {
             String string = ChatColor.RESET+ChatColor.DARK_GRAY.toString()+"Level "+getMainLevel()+" ";
             for(Branch branch : Branch.values()) {
                 if(branchLevels.get(branch) > 0) string += branch.getColor().toString() + branchLevels.get(branch);
@@ -266,8 +272,6 @@ public class CustomItem {
      * Triggers all magic enchantments on this item.
      */
     public void triggerEnchantments(Event event){
-        Utils.notifyAdmins(enchantments.size()+" enchantments triggered on "+getName());
-
         // Check player levels
         if(event instanceof PlayerEvent || (event instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) event).getDamager().getType().equals(EntityType.PLAYER))){
             Player player = event instanceof PlayerEvent ? ((PlayerEvent)event).getPlayer() : (Player)((EntityDamageByEntityEvent) event).getDamager();

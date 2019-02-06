@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
-import com.kylenanakdewa.rayken.utils.EnchantmentUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
@@ -66,6 +65,7 @@ public abstract class MagicEnchantment {
 		// Get the level
 		int lastSpaceIndex = name.lastIndexOf(" ");
 		if(lastSpaceIndex > 0){
+			Utils.notifyAdmins("Level of "+name+" is "+name.substring(lastSpaceIndex));
 			switch (name.substring(lastSpaceIndex)){
 				case "I": level=1; break;
 				case "II": level=2; break;
@@ -79,6 +79,7 @@ public abstract class MagicEnchantment {
 				case "X": level=10; break;
 				default: level=1; break;
 			}
+			Utils.notifyAdmins("Level "+level);
 		}
 
 		return MagicEnchantment.getByFriendlyName(name.substring(0, lastSpaceIndex), level);
@@ -157,8 +158,6 @@ public abstract class MagicEnchantment {
 	public final void use(Event event, ItemStack item){
 		// Do the pre-use check to see if this magic enchantment will actually be used
 		if(!preUseCheck(event, item)) return;
-
-		Utils.notifyAdmins(EnchantmentUtils.getEnchantmentFriendlyName(this)+" was triggered!");
 
 		// Complete the action (defined by the subclass)
 		action(event, item);

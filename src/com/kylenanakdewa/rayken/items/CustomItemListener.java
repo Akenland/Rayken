@@ -9,6 +9,7 @@ import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.MagicPlugin;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Container;
 import org.bukkit.enchantments.Enchantment;
@@ -113,7 +114,7 @@ public final class CustomItemListener implements Listener {
     @EventHandler
     public void customItemEnchant(EnchantItemEvent event) {
         if(event.isCancelled()) return;
-        Bukkit.getScheduler().scheduleSyncDelayedTask(MagicPlugin.plugin, () -> getCustomItem(event.getItem()).setCrafter(event.getEnchanter().getDisplayName()));
+        Bukkit.getScheduler().scheduleSyncDelayedTask(MagicPlugin.plugin, () -> getCustomItem(event.getItem()).setCrafter(ChatColor.stripColor(event.getEnchanter().getDisplayName())));
     }
     @EventHandler
     public void customItemDamage(EntityDamageByEntityEvent event) {
@@ -122,9 +123,6 @@ public final class CustomItemListener implements Listener {
         Player player = (Player)event.getDamager();
         ItemStack mainItem = player.getInventory().getItemInMainHand();
         ItemStack sideItem = player.getInventory().getItemInOffHand();
-
-        if(mainItem!=null && isCustomItem(mainItem)) Utils.sendActionBar(player, player.getDisplayName()+" used "+getCustomItem(mainItem).getName());
-        if(sideItem!=null && isCustomItem(sideItem)) Utils.sendActionBar(player, player.getDisplayName()+" used "+getCustomItem(sideItem).getName());
 
         if(mainItem!=null && isCustomItem(mainItem)) getCustomItem(mainItem).triggerEnchantments(event);
         if(sideItem!=null && isCustomItem(sideItem)) getCustomItem(sideItem).triggerEnchantments(event);
