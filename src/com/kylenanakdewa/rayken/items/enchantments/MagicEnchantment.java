@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 
 import org.bukkit.ChatColor;
@@ -60,12 +59,11 @@ public abstract class MagicEnchantment {
 	public static MagicEnchantment getByFriendlyName(String name){
 		int level = 1;
 
-		name = ChatColor.stripColor(name).toLowerCase().trim();
+		name = ChatColor.stripColor(name).toUpperCase().trim();
 
 		// Get the level
 		int lastSpaceIndex = name.lastIndexOf(" ");
 		if(lastSpaceIndex > 0){
-			Utils.notifyAdmins("Level of "+name+" is "+name.substring(lastSpaceIndex));
 			switch (name.substring(lastSpaceIndex)){
 				case "I": level=1; break;
 				case "II": level=2; break;
@@ -79,7 +77,6 @@ public abstract class MagicEnchantment {
 				case "X": level=10; break;
 				default: level=1; break;
 			}
-			Utils.notifyAdmins("Level "+level);
 		}
 
 		return MagicEnchantment.getByFriendlyName(name.substring(0, lastSpaceIndex), level);
