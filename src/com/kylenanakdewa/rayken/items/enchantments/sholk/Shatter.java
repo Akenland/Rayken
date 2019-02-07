@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Shatter extends MagicEnchantment {
 
-    protected Shatter(int level) {
+    public Shatter(int level) {
         super("Shatter", Branch.SHOLK, level);
     }
 

@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Life extends MagicEnchantment {
 
-    protected Life(int level) {
+    public Life(int level) {
         super("Life", Branch.SHOLK, level);
     }
 

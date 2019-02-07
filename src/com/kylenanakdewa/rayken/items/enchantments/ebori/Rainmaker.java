@@ -22,7 +22,7 @@ import org.bukkit.util.Vector;
  */
 public class Rainmaker extends MagicEnchantment {
 
-    protected Rainmaker(int level) {
+    public Rainmaker(int level) {
         super("Rainmaker", Branch.EBORI, level);
     }
 

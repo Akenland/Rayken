@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Construct extends MagicEnchantment {
 
-    protected Construct(int level) {
+    public Construct(int level) {
         super("Construct", Branch.EBORI, level);
     }
 

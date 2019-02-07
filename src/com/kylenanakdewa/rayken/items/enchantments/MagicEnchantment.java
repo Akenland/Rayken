@@ -73,7 +73,6 @@ public abstract class MagicEnchantment {
 		// Get the level
 		int lastSpaceIndex = name.lastIndexOf(" ")+1;
 		if(lastSpaceIndex > 1){
-			Utils.notifyAdmins("Level of "+name+" is "+name.substring(lastSpaceIndex));
 			switch (name.substring(lastSpaceIndex)){
 				case "I": level=1; break;
 				case "II": level=2; break;
@@ -87,7 +86,6 @@ public abstract class MagicEnchantment {
 				case "X": level=10; break;
 				default: level=1; break;
 			}
-			Utils.notifyAdmins("Level "+level);
 		}
 
 		return MagicEnchantment.getByFriendlyName(name.substring(0, lastSpaceIndex), level);
