@@ -71,8 +71,8 @@ public abstract class MagicEnchantment {
 		name = ChatColor.stripColor(name).toUpperCase().trim();
 
 		// Get the level
-		int lastSpaceIndex = name.lastIndexOf(" ");
-		if(lastSpaceIndex > 0){
+		int lastSpaceIndex = name.lastIndexOf(" ")+1;
+		if(lastSpaceIndex > 1){
 			Utils.notifyAdmins("Level of "+name+" is "+name.substring(lastSpaceIndex));
 			switch (name.substring(lastSpaceIndex)){
 				case "I": level=1; break;
