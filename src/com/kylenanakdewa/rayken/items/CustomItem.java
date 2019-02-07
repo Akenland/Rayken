@@ -263,7 +263,7 @@ public class CustomItem {
         public String getLevelString() {
             String string = ChatColor.RESET+ChatColor.DARK_GRAY.toString()+"Level "+getMainLevel()+" ";
             for(Branch branch : Branch.values()) {
-                if(branchLevels.get(branch) > 0) string += branch.getColor().toString() + branchLevels.get(branch);
+                if(branchLevels.get(branch) > 0) string += branch.getColor().toString() + branchLevels.get(branch) + " ";
             }
             return string;
         }
