@@ -21,8 +21,8 @@ public abstract class AttributeMagicEnchantment extends MagicEnchantment {
     private AttributeModifier.Operation operation;
 
 
-    protected AttributeMagicEnchantment(String id, String name, Branch branch, int level, Attribute attributeType, double attributeAmount, AttributeModifier.Operation attributeOperation) {
-        super(id, name, branch, level);
+    protected AttributeMagicEnchantment(String name, Branch branch, int level, Attribute attributeType, double attributeAmount, AttributeModifier.Operation attributeOperation) {
+        super(name, branch, level);
         attribute = attributeType;
         amount = attributeAmount;
         operation = attributeOperation;

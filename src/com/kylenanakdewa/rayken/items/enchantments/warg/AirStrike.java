@@ -3,6 +3,7 @@ package com.kylenanakdewa.rayken.items.enchantments.warg;
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.items.enchantments.DamageMagicEnchantment;
 
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -17,14 +18,14 @@ import org.bukkit.inventory.ItemStack;
 public class AirStrike extends DamageMagicEnchantment {
 
     public AirStrike(int level) {
-        super("DAMAGE_AERIAL", "Air Strike", Branch.WARG, level);
+        super("Air Strike", Branch.WARG, level);
     }
 
     @Override
     protected double getNewDamage(EntityDamageByEntityEvent event, ItemStack item) {
         double damage = event.getDamage();
-        Player player = (Player)event.getDamager();
-        return !player.isOnGround() || player.isGliding() ? damage + level*4 : damage;
+        LivingEntity entity = (LivingEntity)event.getDamager();
+        return isFalling(entity) ? damage + (damage * level*0.5) : damage;
     }
 
     @Override
@@ -32,4 +33,13 @@ public class AirStrike extends DamageMagicEnchantment {
         return level*2;
     }
 
+    private boolean isFalling(LivingEntity entity){
+		// Entity must not be on ground
+		return !entity.isOnGround()
+		 // Entity must have air below them
+		 && entity.getLocation().subtract(0, 1, 0).getBlock().isEmpty()
+		 && entity.getLocation().subtract(0, 2, 0).getBlock().isEmpty()
+		 // Entity must not be a player, or they must not be flying
+		 && (!(entity instanceof Player) || !((Player)entity).isFlying());
+    }
 }

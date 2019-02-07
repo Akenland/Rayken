@@ -18,7 +18,7 @@ public enum Branch {
 	Branch(ChatColor branchColor, float soundPitch, String name){
 		this.branchColor = branchColor;
 		this.soundPitch = soundPitch;
-		this.name = name; // TODO - get name from config
+		this.name = name;
 	}
 
 	public ChatColor getColor(){

@@ -1,29 +1,26 @@
-package com.kylenanakdewa.rayken.items.enchantments.warg;
+package com.kylenanakdewa.rayken.items.enchantments.rhun;
 
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.items.enchantments.DamageMagicEnchantment;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Charge Warg Enchantment
- * 
- * Weapon damage increases when sprinting.
+ * Deals more damage to burning targets.
  * 
  * @author Kyle Nanakdewa
  */
-public class Charge extends DamageMagicEnchantment {
+public class MagmaStrike extends DamageMagicEnchantment {
 
-    public Charge(int level) {
-        super("Charge", Branch.WARG, level);
+    public MagmaStrike(int level) {
+        super("Magma Strike", Branch.RHUN, level);
     }
 
     @Override
     protected double getNewDamage(EntityDamageByEntityEvent event, ItemStack item) {
         double damage = event.getDamage();
-        return ((Player)event.getDamager()).isSprinting() ? damage + (damage * level*0.05) : damage;
+        return event.getEntity().getFireTicks()>0 ? damage + (damage * level*0.05) : damage;
     }
 
     @Override

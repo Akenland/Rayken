@@ -8,15 +8,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
+import com.kylenanakdewa.rayken.items.CustomItemCommands;
 import com.kylenanakdewa.rayken.items.CustomItemListener;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
+import com.kylenanakdewa.rayken.items.enchantments.ebori.Construct;
+import com.kylenanakdewa.rayken.items.enchantments.ebori.ConstructListener;
 import com.kylenanakdewa.rayken.items.enchantments.ebori.IceAspect;
 import com.kylenanakdewa.rayken.items.enchantments.ebori.Levitate;
+import com.kylenanakdewa.rayken.items.enchantments.ebori.Rainmaker;
+import com.kylenanakdewa.rayken.items.enchantments.rhun.MagmaStrike;
+import com.kylenanakdewa.rayken.items.enchantments.rhun.ToxinStrike;
+import com.kylenanakdewa.rayken.items.enchantments.sholk.Life;
+import com.kylenanakdewa.rayken.items.enchantments.sholk.Shatter;
+import com.kylenanakdewa.rayken.items.enchantments.sholk.ShatterListener;
+import com.kylenanakdewa.rayken.items.enchantments.sholk.Tracking;
 import com.kylenanakdewa.rayken.items.enchantments.warg.AirStrike;
 import com.kylenanakdewa.rayken.items.enchantments.warg.Charge;
 import com.kylenanakdewa.rayken.items.enchantments.warg.LastWord;
 import com.kylenanakdewa.rayken.listeners.ExpListener;
-//import com.kylenanakdewa.RealmsMagic.Listeners.SpellCastListener;
 
 public class MagicPlugin extends JavaPlugin {
 
@@ -29,14 +38,25 @@ public class MagicPlugin extends JavaPlugin {
 		// Register event listeners
 		getServer().getPluginManager().registerEvents(new ExpListener(), this);
 		getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
-		//getServer().getPluginManager().registerEvents(new SpellCastListener(), this);
+		getServer().getPluginManager().registerEvents(new ConstructListener(), this);
+		getServer().getPluginManager().registerEvents(new ShatterListener(), this);
+
+		// Register commands
+		this.getCommand("customitem").setExecutor(new CustomItemCommands());
 
 		// Register enchantments
-		MagicEnchantment.registerEnchantment(LastWord.class, "DAMAGE_LOWHEALTH", "Last Word");
-		MagicEnchantment.registerEnchantment(Charge.class, "DAMAGE_SPRINTING", "Charge");
-		MagicEnchantment.registerEnchantment(AirStrike.class, "DAMAGE_AERIAL", "Air Strike");
-		MagicEnchantment.registerEnchantment(Levitate.class, "LEVITATE", "Levitate");
-		MagicEnchantment.registerEnchantment(IceAspect.class, "SLOWING", "Ice Aspect");
+		MagicEnchantment.registerEnchantment(LastWord.class, "Last Word");
+		MagicEnchantment.registerEnchantment(Charge.class, "Charge");
+		MagicEnchantment.registerEnchantment(AirStrike.class, "Air Strike");
+		MagicEnchantment.registerEnchantment(Levitate.class, "Levitate");
+		MagicEnchantment.registerEnchantment(IceAspect.class, "Ice Aspect");
+		MagicEnchantment.registerEnchantment(Construct.class, "Construct");
+		MagicEnchantment.registerEnchantment(Rainmaker.class, "Rainmaker");
+		MagicEnchantment.registerEnchantment(Shatter.class, "Shatter");
+		MagicEnchantment.registerEnchantment(Life.class, "Life");
+		MagicEnchantment.registerEnchantment(Tracking.class, "Tracking");
+		MagicEnchantment.registerEnchantment(ToxinStrike.class, "Toxin Strike");
+		MagicEnchantment.registerEnchantment(MagmaStrike.class, "Magma Strike");
 	}
 
 	@Override
@@ -69,11 +89,6 @@ public class MagicPlugin extends JavaPlugin {
 					return new MagicUser(player).displayExp(sender);
 				}
 			}
-			
-		// Selecting a spell
-		/*case "spell":
-			if(sender instanceof Player) return new MagicUser((Player) sender).setActiveSpell(args);
-			return false;*/
 			
 		// Command not set up
 		default:

@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
-import com.kylenanakdewa.rayken.MagicPlugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Container;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -114,18 +114,24 @@ public final class CustomItemListener implements Listener {
     @EventHandler
     public void customItemEnchant(EnchantItemEvent event) {
         if(event.isCancelled()) return;
-        Bukkit.getScheduler().scheduleSyncDelayedTask(MagicPlugin.plugin, () -> getCustomItem(event.getItem()).setCrafter(ChatColor.stripColor(event.getEnchanter().getDisplayName())));
+        getCustomItem(event.getItem()).setCrafter(ChatColor.stripColor(event.getEnchanter().getDisplayName()));
     }
     @EventHandler
     public void customItemDamage(EntityDamageByEntityEvent event) {
-        if(event.isCancelled() || !event.getDamager().getType().equals(EntityType.PLAYER)) return;
+        if(event.isCancelled() || !(event.getDamager() instanceof HumanEntity)) return;
 
-        Player player = (Player)event.getDamager();
+        HumanEntity player = (Player)event.getDamager();
         ItemStack mainItem = player.getInventory().getItemInMainHand();
         ItemStack sideItem = player.getInventory().getItemInOffHand();
 
         if(mainItem!=null && isCustomItem(mainItem)) getCustomItem(mainItem).triggerEnchantments(event);
         if(sideItem!=null && isCustomItem(sideItem)) getCustomItem(sideItem).triggerEnchantments(event);
+    }
+    @EventHandler
+    public void customItemShootBow(EntityShootBowEvent event) {
+        if(event.isCancelled() || !(event.getEntity() instanceof HumanEntity)) return;
+
+        getCustomItem(event.getBow()).triggerEnchantments(event);
     }
 
 

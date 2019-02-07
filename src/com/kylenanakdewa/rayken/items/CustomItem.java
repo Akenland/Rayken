@@ -64,10 +64,17 @@ public class CustomItem {
 
 
     /**
-     * Gets the ItemStack.
+     * Gets the Bukkit ItemStack.
      */
     public ItemStack getItem() {
         return itemStack;
+    }
+
+    /**
+     * Gets the Bukkit ItemMeta.
+     */
+    public ItemMeta getItemMeta() {
+        return itemMeta;
     }
 
 
@@ -91,7 +98,7 @@ public class CustomItem {
      * Updates the lore of the item. Content is ordered: Enchantment, Description,
      * Crafter, Level. If vanilla enchants are hidden, description will come first.
      */
-    private void updateLore() {
+    public void updateLore() {
         List<String> lore = new ArrayList<String>();
         if (itemMeta.hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
             lore.addAll(description);
@@ -162,7 +169,7 @@ public class CustomItem {
         // Remove existing enchantment
         enchantments.removeIf(ench -> ench.getName().equalsIgnoreCase(enchantment.getName()));
 
-        enchantments.add(enchantment);
+        if(enchantment.getLevel() > 0) enchantments.add(enchantment);
         updateLore();
     }
 

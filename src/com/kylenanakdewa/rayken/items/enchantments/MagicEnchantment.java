@@ -3,7 +3,9 @@ package com.kylenanakdewa.rayken.items.enchantments;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 
 import org.bukkit.ChatColor;
@@ -19,7 +21,14 @@ public abstract class MagicEnchantment {
 	/** All Magic Enchantments registered on this server. */
 	private static final Map<String, Class<? extends MagicEnchantment>> enchantmentRegistry = new HashMap<String, Class<? extends MagicEnchantment>>();
 	/** Magic Enchantments by friendly name. */
-	private static final Map<String, String> enchantmentFriendlyMap = new HashMap<String, String>();
+	//private static final Map<String, String> enchantmentFriendlyMap = new HashMap<String, String>();
+
+	/**
+	 * Gets all Magic Enchantments IDs registered on the server.
+	 */
+	public static Set<String> getIds() {
+		return enchantmentRegistry.keySet();
+	}
 
 	/**
 	 * Gets a Magic Enchantment by ID.
@@ -45,10 +54,10 @@ public abstract class MagicEnchantment {
 	 * @return a new enchantment instance, or null if the enchantment does not exist
 	 */
 	public static MagicEnchantment getByFriendlyName(String name, int level){
-		name = ChatColor.stripColor(name).toUpperCase().trim();
-		if(!enchantmentFriendlyMap.containsKey(name)) return null;
+		name = ChatColor.stripColor(name).toUpperCase().trim().replace(" ", "_");
+		if(!enchantmentRegistry.containsKey(name)) return null;
 
-		return MagicEnchantment.getById(enchantmentFriendlyMap.get(name), level);
+		return MagicEnchantment.getById(name, level);
 	}
 	/**
 	 * Gets a Magic Enchantment by friendly name, with the level.
@@ -64,6 +73,7 @@ public abstract class MagicEnchantment {
 		// Get the level
 		int lastSpaceIndex = name.lastIndexOf(" ");
 		if(lastSpaceIndex > 0){
+			Utils.notifyAdmins("Level of "+name+" is "+name.substring(lastSpaceIndex));
 			switch (name.substring(lastSpaceIndex)){
 				case "I": level=1; break;
 				case "II": level=2; break;
@@ -77,6 +87,7 @@ public abstract class MagicEnchantment {
 				case "X": level=10; break;
 				default: level=1; break;
 			}
+			Utils.notifyAdmins("Level "+level);
 		}
 
 		return MagicEnchantment.getByFriendlyName(name.substring(0, lastSpaceIndex), level);
@@ -86,12 +97,11 @@ public abstract class MagicEnchantment {
 	/**
 	 * Register a Magic Enchantment on the server.
 	 * @param enchantmentClass the class for your enchantment
-	 * @param id the unique ID for your enchantment, ideally formatted like DAMAGE_LOWHEALTH
-	 * @param name the friendly display name for your enchantment
+	 * @param name the friendly display name for your enchantment, must be unique
 	 */
-	public static void registerEnchantment(Class<? extends MagicEnchantment> enchantmentClass, String id, String name){
-		enchantmentRegistry.putIfAbsent(id.toUpperCase(), enchantmentClass);
-		enchantmentFriendlyMap.putIfAbsent(name.toUpperCase(), id.toUpperCase());
+	public static void registerEnchantment(Class<? extends MagicEnchantment> enchantmentClass, String name){
+		enchantmentRegistry.putIfAbsent(name.toUpperCase().replace(" ", "_"), enchantmentClass);
+		//enchantmentFriendlyMap.putIfAbsent(name.toUpperCase(), id.toUpperCase());
 	}
 
 
@@ -106,13 +116,13 @@ public abstract class MagicEnchantment {
     protected int level;
 
 
-	protected MagicEnchantment(String id, String name, Branch branch, int level){
-        this.id = id.toUpperCase();
+	protected MagicEnchantment(String name, Branch branch, int level){
+        this.id = name.toUpperCase().replace(" ", "_");
         this.name = name;
         this.branch = branch;
 		this.level = level;
 
-		registerEnchantment(getClass(), id, name);
+		registerEnchantment(getClass(), name);
 	}
 
 

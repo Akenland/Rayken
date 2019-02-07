@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 public class LastWord extends DamageMagicEnchantment {
 
     public LastWord(int level) {
-        super("DAMAGE_LOWHEALTH", "Last Word", Branch.WARG, level);
+        super("Last Word", Branch.WARG, level);
     }
 
     @Override

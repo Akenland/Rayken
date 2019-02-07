@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
  */
 public abstract class DamageMagicEnchantment extends MagicEnchantment {
 
-    protected DamageMagicEnchantment(String id, String name, Branch branch, int level) {
-        super(id, name, branch, level);
+    protected DamageMagicEnchantment(String name, Branch branch, int level) {
+        super(name, branch, level);
     }
 
 
@@ -29,7 +29,7 @@ public abstract class DamageMagicEnchantment extends MagicEnchantment {
         EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent)event;
         damageEvent.setDamage(getNewDamage(damageEvent, item));
 
-        Utils.notifyAdmins(name+" changed damage from "+damageEvent.getDamage()+" to "+getNewDamage(damageEvent, item));
+        Utils.notifyAdmins(name+" "+level+" (weight "+getWeight()+") changed damage from "+damageEvent.getDamage()+" to "+getNewDamage(damageEvent, item));
     }
 
 

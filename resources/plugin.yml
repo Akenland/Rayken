@@ -10,3 +10,6 @@ commands:
   spell:
     description: Change your active spell
     aliases: [spells, changespell, equipspell, cast]
+  customitem:
+    description: Manage custom items
+    aliases: [ci]
