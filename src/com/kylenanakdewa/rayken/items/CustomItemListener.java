@@ -142,6 +142,9 @@ public final class CustomItemListener implements Listener {
         if(player.hasPermission("magic.itemoverride") || item==null || !item.getType().isItem()) return false;
 
         if(isCustomItem(item)){
+            // Ignore Blade of Light and Warp items
+            if(item.getItemMeta().hasDisplayName() && (item.getItemMeta().getDisplayName().contains("Blade of Light") || item.getItemMeta().getDisplayName().contains("Warp"))) return false;
+
             player.sendMessage(CommonColors.INFO+"This item may require conversion. Bring it to the Conversion Center at spawn.");
             String itemName = item.getItemMeta().hasDisplayName() ? item.getItemMeta().getDisplayName() : item.getType().toString();
             Utils.notifyAdmins(player.getDisplayName()+CommonColors.INFO+" has a custom item: "+itemName);

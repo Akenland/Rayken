@@ -102,18 +102,18 @@ public class CustomItem {
         List<String> lore = new ArrayList<String>();
         if (itemMeta.hasItemFlag(ItemFlag.HIDE_ENCHANTS)) {
             lore.addAll(description);
-            if(!description.isEmpty()) lore.add(ChatColor.RESET.toString());
+            if(!description.isEmpty()) lore.add(ChatColor.RESET.toString()+ChatColor.RESET);
             lore.addAll(getEnchantmentStrings(true));
-            if(!getEnchantmentStrings(true).isEmpty()) lore.add(ChatColor.RESET.toString());
+            if(!getEnchantmentStrings(true).isEmpty()) lore.add(ChatColor.RESET.toString()+ChatColor.RESET);
         } else {
             lore.addAll(getEnchantmentStrings(false));
-            lore.add(ChatColor.RESET.toString());
+            lore.add(ChatColor.RESET.toString()+ChatColor.RESET);
             lore.addAll(description);
-            if(!description.isEmpty()) lore.add(ChatColor.RESET.toString());
+            if(!description.isEmpty()) lore.add(ChatColor.RESET.toString()+ChatColor.RESET);
         }
         if(crafter!=null){
             lore.add(crafter);
-            lore.add(ChatColor.RESET.toString());
+            lore.add(ChatColor.RESET.toString()+ChatColor.RESET);
         }
         lore.add(getItemLevel().getLevelString());
 

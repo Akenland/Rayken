@@ -142,7 +142,7 @@ public final class ExpListener implements Listener {
 		Player player = event.getEntity().getKiller();
 		
 		// If killer is not null, give them the XP
-		if(player!=null && event.getEntityType()==EntityType.PLAYER){
+		if(player!=null && event.getEntityType().equals(EntityType.PLAYER)){
 			// If they killed a player, up to 32xp
 			double expGained = event.getDroppedExp()*0.32;
 
