@@ -149,7 +149,7 @@ public final class ExpListener implements Listener {
 			// Boost it 2x if it was caused by TNT
 			if(event.getEntity().getLastDamageCause().getCause().equals(DamageCause.BLOCK_EXPLOSION)) expGained = expGained*2;
 			// Halve gained XP if it's a repeated kill (to prevent abuse)
-			if(lastPlayerKilled.get(player.getUniqueId()).equals(event.getEntity().getUniqueId())) expGained = expGained/2;
+			if(lastPlayerKilled.containsKey(player.getUniqueId()) && lastPlayerKilled.get(player.getUniqueId()).equals(event.getEntity().getUniqueId())) expGained = expGained/2;
 
 			addToBuffer(rhunExpBuffer, player, expGained);
 
