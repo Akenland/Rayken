@@ -54,7 +54,7 @@ public class Rainmaker extends MagicEnchantment {
 
     @Override
     public double getWeight() {
-        return level*9;
+        return level*8;
     }
 
 }
