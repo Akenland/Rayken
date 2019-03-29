@@ -36,20 +36,23 @@ public class Rainmaker extends MagicEnchantment {
     protected void action(Event event, ItemStack item) {
         EntityShootBowEvent shootEvent = (EntityShootBowEvent) event;
         PlayerInventory inv = ((HumanEntity)shootEvent.getEntity()).getInventory();
-        Vector velocity = shootEvent.getProjectile().getVelocity();
+        //Vector velocity = shootEvent.getProjectile().getVelocity();
 
         for(int i=1; i<level+1; i++){
             Bukkit.getScheduler().scheduleSyncDelayedTask(MagicPlugin.plugin, () -> {
-                shootEvent.getEntity().launchProjectile(Arrow.class, velocity);
-                reduceItemCount(Material.ARROW, inv);
+                if(reduceItemCount(Material.ARROW, inv))
+                    shootEvent.getEntity().launchProjectile(Arrow.class);
             }, i*10);
         }
-
     }
 
-    private static void reduceItemCount(Material material, Inventory inventory){
-        ItemStack item = inventory.getItem(inventory.first(material));
+    private static boolean reduceItemCount(Material material, Inventory inventory){
+        int index = inventory.first(material);
+        if(index < 0) return false;
+
+        ItemStack item = inventory.getItem(index);
         item.setAmount(item.getAmount()-1);
+        return true;
     }
 
     @Override
