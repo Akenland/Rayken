@@ -13,7 +13,6 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.util.Vector;
 
 /**
  * A Magic Enchantment that places a block when a fired arrow hits a block face.
@@ -36,7 +35,6 @@ public class Rainmaker extends MagicEnchantment {
     protected void action(Event event, ItemStack item) {
         EntityShootBowEvent shootEvent = (EntityShootBowEvent) event;
         PlayerInventory inv = ((HumanEntity)shootEvent.getEntity()).getInventory();
-        //Vector velocity = shootEvent.getProjectile().getVelocity();
 
         for(int i=1; i<level+1; i++){
             Bukkit.getScheduler().scheduleSyncDelayedTask(MagicPlugin.plugin, () -> {
