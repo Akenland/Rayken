@@ -4,6 +4,7 @@ import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
 import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
 
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Attacker gains health on successful hits.
- * 
+ *
  * @author Kyle Nanakdewa
  */
 public class Life extends MagicEnchantment {
@@ -35,7 +36,8 @@ public class Life extends MagicEnchantment {
         double healthGained = damageEvent.getDamage()*level*0.05;
 
         LivingEntity entity = (LivingEntity)damageEvent.getDamager();
-        entity.setHealth(entity.getHealth()+healthGained);
+        double newHealth = Math.max(entity.getHealth()+healthGained, entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        entity.setHealth(newHealth);
 
         Utils.notifyAdmins(name+" "+level+" (weight "+getWeight()+") regained "+healthGained+" from "+damageEvent.getDamage()+" damage");
     }
