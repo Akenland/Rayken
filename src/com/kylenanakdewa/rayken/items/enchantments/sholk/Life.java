@@ -2,7 +2,7 @@ package com.kylenanakdewa.rayken.items.enchantments.sholk;
 
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.Branch;
-import com.kylenanakdewa.rayken.items.enchantments.MagicEnchantment;
+import com.kylenanakdewa.rayken.items.enchantments.DamageMagicEnchantment;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Kyle Nanakdewa
  */
-public class Life extends MagicEnchantment {
+public class Life extends DamageMagicEnchantment {
 
     public Life(int level) {
         super("Life", Branch.SHOLK, level);
@@ -29,17 +29,16 @@ public class Life extends MagicEnchantment {
     }
 
     @Override
-    protected void action(Event event, ItemStack item) {
-        EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent)event;
+    protected double getNewDamage(EntityDamageByEntityEvent event, ItemStack item) {
+        // 10% of damage, per level
+        double healthGained = event.getDamage() * level * 0.1;
 
-        // 5% of damage, per level
-        double healthGained = damageEvent.getDamage()*level*0.05;
-
-        LivingEntity entity = (LivingEntity)damageEvent.getDamager();
-        double newHealth = Math.max(entity.getHealth()+healthGained, entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        LivingEntity entity = (LivingEntity)event.getDamager();
+        double newHealth = Math.min(entity.getHealth()+healthGained, entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         entity.setHealth(newHealth);
 
-        Utils.notifyAdmins(name+" "+level+" (weight "+getWeight()+") regained "+healthGained+" from "+damageEvent.getDamage()+" damage");
+        Utils.notifyAdmins(name+" "+level+" (weight "+getWeight()+") regained "+healthGained+" from "+event.getDamage()+" damage");
+        return event.getDamage();
     }
 
     @Override

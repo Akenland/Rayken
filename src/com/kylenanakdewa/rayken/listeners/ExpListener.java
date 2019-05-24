@@ -24,15 +24,20 @@ import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.rayken.MagicUser;
 
 public final class ExpListener implements Listener {
-	
+
+	/** Overall XP multiplier. */
+	public static double xpMultiplier = 1;
+
 	//// Exp Gain buffers - store the exp gained here, that way we're not constantly writing data
 	public static HashMap<String,Double> wargExpBuffer = new HashMap<String,Double>();
 	public static HashMap<String,Double> eboriteExpBuffer = new HashMap<String,Double>();
 	public static HashMap<String,Double> sholkExpBuffer = new HashMap<String,Double>();
 	public static HashMap<String,Double> rhunExpBuffer = new HashMap<String,Double>();
-		
+
 	// Add to the exp buffers
 	public void addToBuffer(HashMap<String,Double> buffer, Player player, double amount){
+		amount = amount * xpMultiplier;
+
 		String playerName = player.getName();
 		Double currentExp = buffer.get(playerName);
 		buffer.put(playerName, (currentExp==null ? amount : currentExp+amount));
@@ -44,15 +49,15 @@ public final class ExpListener implements Listener {
 		addToBuffer(sholkExpBuffer, player, amount);
 		addToBuffer(rhunExpBuffer, player, amount);
 	}
-	
+
 	// Transfer exp from buffer to file when player quits
 	@EventHandler(priority = EventPriority.LOW)
 	public void playerQuit(PlayerQuitEvent event){
 		// Whenever MagicUser is instantiated, it automatically saves exp in the buffers, calculates levels, and saves to file
 		new MagicUser(event.getPlayer());
 	}
-	
-	
+
+
 	// Normal Exp gain listener - add 1% of xp to each branch
 	@EventHandler
 	public void expGain(PlayerExpChangeEvent event){
@@ -68,14 +73,14 @@ public final class ExpListener implements Listener {
 		}
 	}
 
-	
+
 	// Warg Exp gain - crafting, smelting
 	// Smelting
 	@EventHandler
 	public void smeltingExpGain(FurnaceExtractEvent event){
 		double expGained = 0.05 * event.getItemAmount();
 		addToBuffer(wargExpBuffer, event.getPlayer(), expGained);
-		
+
 		//event.getPlayer().sendMessage(Utils.infoText+"You collected "+expGained+" Warg XP from smelting.");
 	}
 	// Using items
@@ -83,11 +88,11 @@ public final class ExpListener implements Listener {
 	public void itemBreakExpGain(PlayerItemBreakEvent event){
 		double expGained = 2.0;
 		addToBuffer(wargExpBuffer, event.getPlayer(), expGained);
-		
+
 		//event.getPlayer().sendMessage(Utils.infoText+"You collected "+expGained+" Warg XP from using items.");
 	}
-	
-	
+
+
 	// Eborite Exp gain - enchanting, brewing
 	// Enchanting
 	@EventHandler
@@ -103,11 +108,11 @@ public final class ExpListener implements Listener {
 			expGained = 4.0;
 		}
 		addToBuffer(eboriteExpBuffer, event.getEnchanter(), expGained);
-		
+
 		//event.getEnchanter().sendMessage(Utils.infoText+"You collected "+expGained+" Eborite XP from enchanting.");
 	}
-	
-	
+
+
 	// Sholk Exp gain - farming
 	// Farming crops
 	@EventHandler
@@ -116,7 +121,7 @@ public final class ExpListener implements Listener {
 		if(event.getBlockAgainst().getType()==Material.SOIL){
 			double expGained = 0.05;
 			addToBuffer(sholkExpBuffer, event.getPlayer(), expGained);
-			
+
 			//event.getPlayer().sendMessage(Utils.infoText+"You collected "+expGained+" Sholk XP from farming.");
 		}
 	}
@@ -128,19 +133,19 @@ public final class ExpListener implements Listener {
 			Player player = (Player) event.getBreeder();
 			double expGained = 1.0;
 			addToBuffer(sholkExpBuffer, player, expGained);
-			
+
 			//player.sendMessage(Utils.infoText+"You collected "+expGained+" Sholk XP from breeding.");
 		}
 	}
-	
-	
+
+
 	// Rhun Exp gain - killing
 	private static HashMap<UUID,UUID> lastPlayerKilled = new HashMap<UUID,UUID>();
 	@EventHandler
 	public void huntingExpGain(EntityDeathEvent event){
 		// Get the killer
 		Player player = event.getEntity().getKiller();
-		
+
 		// If killer is not null, give them the XP
 		if(player!=null && event.getEntityType().equals(EntityType.PLAYER)){
 			// If they killed a player, up to 32xp

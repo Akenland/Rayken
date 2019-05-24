@@ -40,7 +40,7 @@ public class Rainmaker extends MagicEnchantment {
             Bukkit.getScheduler().scheduleSyncDelayedTask(MagicPlugin.plugin, () -> {
                 if(reduceItemCount(Material.ARROW, inv))
                     shootEvent.getEntity().launchProjectile(Arrow.class);
-            }, i*10);
+            }, i*5);
         }
     }
 

@@ -14,12 +14,12 @@ import com.kylenanakdewa.core.characters.players.PlayerCharacter;
  * @author Kyle Nanakdewa
  */
 public class MagicUser extends PlayerSaveDataSection {
-	
+
 	//// HashMap to store active spell
 	//public static HashMap<String,Spell> activeSpell = new HashMap<String,Spell>();
-	
-	
-	//// Information about this magic user	
+
+
+	//// Information about this magic user
 	//Map<String,Object> unlockedSpells;
 	//Map<String,Object> unlockedSkills;
 
@@ -43,15 +43,12 @@ public class MagicUser extends PlayerSaveDataSection {
 		loadData();
 		saveExp();
 	}
-	/*public MagicUser(OfflinePlayer player){
-		super(player);
-		loadData();
-		saveExp();
-	}*/
 
 
-	// Load magic user stats
-	void loadData(){
+	/**
+	 * Load the data for this MagicUser.
+	 */
+	private void loadData(){
 		//if(data.contains("magicuser.spells")) unlockedSpells = data.getConfigurationSection("magicuser.spells").getValues(false);
 		//if(data.contains("magicuser.skills")) unlockedSkills = data.getConfigurationSection("magicuser.skills").getValues(false);
 
@@ -67,8 +64,10 @@ public class MagicUser extends PlayerSaveDataSection {
 		}
 	}
 
-	// Save magic user stats
-	void saveData(){
+	/**
+	 * Save the data for this MagicUser.
+	 */
+	private void saveData(){
 		// If no data (all levels are 0), don't save
 		if(levelWarg+levelEborite+levelSholk+levelRhun==0) return;
 
@@ -84,10 +83,10 @@ public class MagicUser extends PlayerSaveDataSection {
 		save();
 	}
 
-	
-	
+
+
 	// Save exp currently in buffers
-	public void saveExp(){
+	private void saveExp(){
 		// Save the exp from the buffers
 		Double gainedExpWarg = ExpListener.wargExpBuffer.get(character.getUsername());
 		expWarg += gainedExpWarg!=null ? gainedExpWarg : 0;
@@ -97,9 +96,9 @@ public class MagicUser extends PlayerSaveDataSection {
 		expSholk += gainedExpSholk!=null ? gainedExpSholk : 0;
 		Double gainedExpRhun = ExpListener.rhunExpBuffer.get(character.getUsername());
 		expRhun += gainedExpRhun!=null ? gainedExpRhun : 0;
-		
-		//Utils.notifyAdmins(CommonColors.INFO+"[Magic Debug] Gained XP for "+character.getName()+" includes: Warg "+gainedExpWarg+" XP, Eborite "+gainedExpEborite+" XP, Sholk "+gainedExpSholk+" XP, Rhun "+gainedExpRhun+" XP.");		
-		
+
+		//Utils.notifyAdmins(CommonColors.INFO+"[Magic Debug] Gained XP for "+character.getName()+" includes: Warg "+gainedExpWarg+" XP, Eborite "+gainedExpEborite+" XP, Sholk "+gainedExpSholk+" XP, Rhun "+gainedExpRhun+" XP.");
+
 		// Empty the buffers
 		ExpListener.wargExpBuffer.remove(character.getUsername());
 		ExpListener.eboriteExpBuffer.remove(character.getUsername());
@@ -108,9 +107,9 @@ public class MagicUser extends PlayerSaveDataSection {
 		// Calculate levels
 		convertExpToLevels();
 	}
-	
+
 	// Convert exp to levels
-	void convertExpToLevels(){
+	private void convertExpToLevels(){
 		for(Branch branch : Branch.values()){
 			int level = 0; // Represents the level of this branch
 			double exp = 0.0; // Represents the exp of this branch
@@ -139,10 +138,10 @@ public class MagicUser extends PlayerSaveDataSection {
 				exp -= expRequired;
 				level++;
 			}
-			
+
 			// Make sure exp is nicely rounded
 			exp = Math.round(exp*100.0)/100.0;
-			
+
 			// Once that finishes, save the new level and exp in this magicuser
 			// Load the branch level and exp that we're working on
 			switch(branch){
@@ -161,8 +160,8 @@ public class MagicUser extends PlayerSaveDataSection {
 		// Once all branches are done, save the file
 		saveData();
 	}
-	
-	
+
+
 	/*// Set the active spell for this magicuser
 	@Deprecated
 	boolean setActiveSpell(Spell spell){
@@ -187,16 +186,16 @@ public class MagicUser extends PlayerSaveDataSection {
 		Player player = (Player)getPlayer();
 
 		spellName = spellName.toLowerCase();
-		
+
 		if(unlockedSpells!=null && unlockedSpells.containsKey(spellName)){
 			// Get the level
 			int playerLevel = (int) this.unlockedSpells.get(spellName);
 			level = (level!=0 && level<=playerLevel) ? level : playerLevel;
-			
+
 			// Get the spell and make it active
 			return setActiveSpell(SpellUtils.getSpell(spellName, level));
 		}
-		
+
 		activeSpell.remove(getName());
 		Utils.sendActionBar(player, "No spell selected");
 		return true;
@@ -232,8 +231,8 @@ public class MagicUser extends PlayerSaveDataSection {
 		Utils.sendActionBar(player, Utils.errorText+"Incorrect arguments");
 		return false;
 	}*/
-	
-	
+
+
 	// Display this magicuser's xp
 	boolean displayExp(CommandSender sender){
 		sender.sendMessage(CommonColors.INFO+"--- Magic XP: "+character.getName()+CommonColors.INFO+" ---");
@@ -241,7 +240,7 @@ public class MagicUser extends PlayerSaveDataSection {
 		sender.sendMessage(Branch.EBORI.getColor()+"- "+Branch.EBORI.getName()+" Level "+levelEborite+", "+expEborite+" XP");
 		sender.sendMessage(Branch.SHOLK.getColor()+"- "+Branch.SHOLK.getName()+" Level "+levelSholk+", "+expSholk+" XP");
 		sender.sendMessage(Branch.RHUN.getColor()+"- "+Branch.RHUN.getName()+" Level "+levelRhun+", "+expRhun+" XP");
-		
+
 		return true;
 	}
 
